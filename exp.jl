@@ -15,8 +15,8 @@ function expOnce(dx,dy,Gamma0,T0,time,dt,trunc,nsim,PBC=true)
 
         vorticeHist = calcVortices(numt,dx,dy,latticeHist,PBC)
 
-        lattice_corr = lattice_corr + findCorrelation(numt,dx,dy,latticeHist,trunc,PBC)
-        vortice_corr = vortice_corr + findCorrelation(numt,dx,dy,vorticeHist,trunc,PBC)
+        lattice_corr = lattice_corr + findLatticeCorrelation(numt,dx,dy,latticeHist,trunc,PBC)
+        vortice_corr = vortice_corr + findVorticeCorrelation(numt,dx,dy,vorticeHist,trunc,PBC)
     end
     lattice_corr = lattice_corr/nsim
     vortice_corr = vortice_corr/nsim

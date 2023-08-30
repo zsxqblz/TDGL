@@ -14,7 +14,7 @@ function calcVortices(numt,dx,dy,latticeHist,PBC=true)
     return vorticeHist
 end
 
-function findCorrelation(numt,dx,dy,latticeHist,trunc=10,PBC=true)
+function findLatticeCorrelation(numt,dx,dy,latticeHist,trunc=10,PBC=true)
     corr=zeros(ComplexF64,numt-trunc,dx,dy)
     if PBC
         for y=1:dx, dely=0:dx-1, x=1:dx, delx=0:dy-1
@@ -28,7 +28,31 @@ function findCorrelation(numt,dx,dy,latticeHist,trunc=10,PBC=true)
                         corr[delt+1,delx+1,dely+1]=(
                             corr[delt+1,delx+1,dely+1]+
                             exp(im*latticeHist[t,x,y])
-                            *exp(im*latticeHist[t+delt,mod1(x+delx,end),mod1(y+dely,end)])
+                            *exp(-im*latticeHist[t+delt,mod1(x+delx,end),mod1(y+dely,end)])
+                        )
+                    end
+                end
+                corr[delt+1,delx+1,dely+1] = corr[delt+1,delx+1,dely+1]/cnt/dx/dy
+            end
+        end
+    end
+    return corr
+end
+
+function findVorticeCorrelation(numt,dx,dy,vorticeHist,trunc=10,PBC=true)
+    corr=zeros(ComplexF64,numt-trunc,dx,dy)
+    if PBC
+        for y=1:dx, dely=0:dy-1, x=1:dx, delx=0:dx-1
+            for delt=0:numt-trunc-1
+                cnt = 0
+                for t=trunc+1:numt
+                    if t+delt > numt 
+                        continue
+                    else
+                        cnt = cnt + 1
+                        corr[delt+1,delx+1,dely+1]=(
+                            corr[delt+1,delx+1,dely+1]+
+                            vorticeHist[t,x,y]*vorticeHist[t+delt,mod1(x+delx,end),mod1(y+dely,end)]
                         )
                     end
                 end

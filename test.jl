@@ -26,8 +26,8 @@ let
 
     vorticeHist = calcVortices(numt,dx,dy,latticeHist)
 
-    corr = findCorrelation(numt,dx,dy,latticeHist,trunc)
-    vortice_corr = findCorrelation(numt,dx,dy,vorticeHist,trunc)
+    corr = findLatticeCorrelation(numt,dx,dy,latticeHist,trunc)
+    vortice_corr = findVorticeCorrelation(numt,dx,dy,vorticeHist,trunc)
 
     x_l = collect(1:dx)
     y_l = collect(1:dy)
