@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 #SBATCH --job-name=T0
 #SBATCH --nodes=1                # node count
 #SBATCH --ntasks=1               # total number of tasks across all nodes
@@ -9,7 +9,7 @@
 #SBATCH --mail-user=yz4281@princeton.edu
 
 let i=$1
-let T0=0.5*i
+T0=$((i*0.5))
 let dx=20
 let dy=20
 let Gamma0=1
